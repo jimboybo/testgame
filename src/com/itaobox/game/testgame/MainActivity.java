@@ -17,19 +17,19 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.main);
 		
 		Context context= this;
 		LinearLayout line = (LinearLayout)findViewById(R.id.line1);
 		
 		Button btn = new Button(context);
-		btn.setText("Game");
+		btn.setText("ItaoBox Sprite");
 		btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				 Intent intent = new Intent();  
-	             intent.setClass(MainActivity.this, Game.class);  
+	             intent.setClass(MainActivity.this, SampleItaoboxSprite.class);  
 	             startActivity(intent);
 			}
 		});

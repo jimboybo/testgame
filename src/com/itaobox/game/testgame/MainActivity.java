@@ -36,8 +36,20 @@ public class MainActivity extends Activity {
 		line.addView(btn);
 		
 		Button btn1 = new Button(context);
-		btn1.setText("Game1");
+		btn1.setText("Game");
 		btn1.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				 Intent intent = new Intent();  
+	             intent.setClass(MainActivity.this, Game.class);  
+	             startActivity(intent);
+			}
+		});
+		line.addView(btn1);
+		Button btn2 = new Button(context);
+		btn2.setText("Game1");
+		btn2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -46,7 +58,7 @@ public class MainActivity extends Activity {
 	             startActivity(intent);
 			}
 		});
-		line.addView(btn1);
+		line.addView(btn2);
 	}
 
 	@Override

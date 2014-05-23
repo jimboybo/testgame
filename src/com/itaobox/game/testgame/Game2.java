@@ -16,27 +16,20 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
+import com.itaobox.game.core.ItaoboxSprite;
+
 public class Game2 extends SimpleBaseGameActivity {
 
 	private static final int CAMERA_WIDTH = 720;
 	private static final int CAMERA_HEIGHT = 480;
 
 	private static final float DEMO_VELOCITY = 100.0f;
-
-	private BitmapTextureAtlas mBitmapTextureAtlas;
-	private TiledTextureRegion mFaceTextureRegion;
-
-	// ===========================================================
-	// Constructors
-	// ===========================================================
-
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
-
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
+	
+	private ItaoboxSprite itaoboxSprite;
+	private TiledTextureRegion tiled1;
+	private AnimatedSprite as1;
+	
+	
 
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -47,11 +40,9 @@ public class Game2 extends SimpleBaseGameActivity {
 
 	@Override
 	public void onCreateResources() {
-		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-
-		this.mBitmapTextureAtlas = new BitmapTextureAtlas(this.getTextureManager(), 64, 32, TextureOptions.BILINEAR);
-		this.mFaceTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mBitmapTextureAtlas, this, "face_circle_tiled.png", 0, 0, 2, 1);
-		this.mBitmapTextureAtlas.load();
+		this.itaoboxSprite = new ItaoboxSprite(this, this.getTextureManager(), "mine/");
+		this.tiled1 = this.itaoboxSprite.add("person.png", 3, 4);
+		this.itaoboxSprite.configRes();
 	}
 
 	@Override
@@ -60,23 +51,18 @@ public class Game2 extends SimpleBaseGameActivity {
 
 		final Scene scene = new Scene();
 		scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		
+		this.as1 = this.itaoboxSprite.getAnimationSprite(this.tiled1, getVertexBufferObjectManager(), 100, 100, new long[]{200,200,200}, 3, 5, true);
+		scene.attachChild(as1);
 
-		final float centerX = (Game2.CAMERA_WIDTH - this.mFaceTextureRegion.getWidth()) / 2;
-		final float centerY = (Game2.CAMERA_HEIGHT - this.mFaceTextureRegion.getHeight()) / 2;
-		final Ball ball = new Ball(centerX, centerY, this.mFaceTextureRegion, this.getVertexBufferObjectManager());
+		final float centerX = (Game2.CAMERA_WIDTH - this.tiled1.getWidth()) / 2;
+		final float centerY = (Game2.CAMERA_HEIGHT - this.tiled1.getHeight()) / 2;
+		final Ball ball = new Ball(centerX, centerY, this.tiled1, this.getVertexBufferObjectManager());
 
 		scene.attachChild(ball);
 
 		return scene;
 	}
-
-	// ===========================================================
-	// Methods
-	// ===========================================================
-
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
 
 	private static class Ball extends AnimatedSprite {
 		private final PhysicsHandler mPhysicsHandler;
